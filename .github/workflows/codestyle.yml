@@ -1,0 +1,32 @@
+name: Code Style Check
+
+on: [push, pull_request]
+
+permissions:
+  actions: read
+  contents: read
+  security-events: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Use Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.11.1'
+    - name: Install pnpm
+      uses: pnpm/action-setup@v3
+      with:
+        version: '8.15.4'
+        run_install: false
+
+    - name: Install dependencies
+      run: pnpm install
+
+    - name: Lint
+      run: pnpm run lint
