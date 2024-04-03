@@ -1,0 +1,17 @@
+version: '3'
+services:
+  devcontainer:
+    image: mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye
+    volumes:
+      - .:/workspace:cached
+      - node_modules:/workspace/node_modules
+    ports:
+      - 3000:3000
+      - 9229:9229
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+    entrypoint: ["tail", "-f", "/dev/null"]
+    
+volumes:
+  node_modules:

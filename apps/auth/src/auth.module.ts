@@ -14,7 +14,9 @@ import { MongooseModule } from '@nestjs/mongoose';
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '60s' },
     }),
-    MongooseModule.forRoot('mongodb://mongodb/nest'),
+    MongooseModule.forRoot(
+      'mongodb://admin:secret@mongodb/nest?authSource=admin',
+    ),
   ],
   providers: [AuthService],
   controllers: [AuthController],

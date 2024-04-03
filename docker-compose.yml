@@ -1,0 +1,3 @@
+include: 
+  - apps/auth/docker-compose.yml
+  - apps/gateway/docker-compose.yml

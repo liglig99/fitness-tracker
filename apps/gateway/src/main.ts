@@ -9,11 +9,6 @@ async function bootstrap() {
     new ExpressAdapter(),
   );
 
-  app.connectMicroservice({
-    transport: 'tcp',
-  });
-
-  await app.startAllMicroservices();
   await app.listen(3000);
 }
 bootstrap();
