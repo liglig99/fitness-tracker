@@ -20,7 +20,6 @@
 			]
 		}
 	},
-	"postStartCommand": "pnpm start:dev",
 	"remoteUser": "node",
 	"postCreateCommand": "sudo chown node node_modules"
 

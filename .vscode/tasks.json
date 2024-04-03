@@ -1,0 +1,45 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Gateway: Dev",
+            "type": "shell",
+            "command": "pnpm start:dev gateway",
+            "group": "none",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": true
+            }
+        },
+        {
+            "label": "Auth: Dev",
+            "type": "shell",
+            "command": "pnpm start:dev auth",
+            "group": "none",
+            "presentation": {
+                "echo": true,
+                "reveal": "silent",
+                "focus": false,
+                "panel": "shared",
+                "showReuseMessage": true,
+                "clear": true
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "All: Dev",
+            "dependsOn": [
+                "Gateway: Dev",
+                "Auth: Dev"
+            ],
+            "group": "none",
+            "runOptions": {
+                "runOn": "folderOpen"
+            }
+        }
+    ]
+}
