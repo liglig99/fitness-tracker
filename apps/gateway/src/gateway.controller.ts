@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Headers } from '@nestjs/common';
 import { GatewayService } from './gateway.service';
 
 @Controller()
@@ -6,7 +6,7 @@ export class GatewayController {
   constructor(private readonly gatewayService: GatewayService) {}
 
   @Get()
-  getHello(): string {
-    return 'Hello World!';
+  async getHello(@Headers('authorization') token: string): Promise<string> {
+    return this.gatewayService.getHello(token);
   }
 }

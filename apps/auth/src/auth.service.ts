@@ -27,11 +27,11 @@ export class AuthService {
     pass: string,
   ): Promise<{ access_token: string }> {
     const user = await this.usersService.findOne(username);
-    if (user?.password !== pass) {
-      throw new UnauthorizedException();
+
+    if (!user || !(await bcrypt.compare(pass, user.password))) {
+      throw new RpcException(new UnauthorizedException());
     }
     const payload = { sub: user.email, username: user.username };
-    console.log('payload', payload);
     return {
       access_token: await this.jwtService.signAsync(payload),
     };
