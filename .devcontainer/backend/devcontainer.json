@@ -11,7 +11,8 @@
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
 	// "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
 	"features": {
-		"ghcr.io/devcontainers-contrib/features/nestjs-cli:2": {}
+		"ghcr.io/devcontainers-contrib/features/nestjs-cli:2": {},
+		"ghcr.io/devcontainers-contrib/features/mongosh-homebrew": {}
 	},
 	"customizations": {
 		"vscode": {
