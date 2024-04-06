@@ -7,6 +7,6 @@ export class GatewayController {
 
   @Get()
   getHello(): string {
-    return this.gatewayService.getHello();
+    return 'Hello World!';
   }
 }

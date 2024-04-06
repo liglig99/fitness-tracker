@@ -13,6 +13,24 @@
                 "panel": "shared",
                 "showReuseMessage": true,
                 "clear": true
+            },
+            "isBackground": true,
+            "problemMatcher": {
+                "owner": "node",
+                "fileLocation": "relative",
+                "pattern":[
+                    {
+                        "regexp": "^([^\\\\s].*)\\\\((\\\\d+,\\\\d+)\\\\):\\\\s*(.*)$",
+                        "file": 1,
+                        "location": 2,
+                        "message": 3
+                    }
+                ],
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Testitest",
+                    "endsPattern": "^No errors found."
+                }
             }
         },
         {
@@ -28,7 +46,24 @@
                 "showReuseMessage": true,
                 "clear": true
             },
-            "problemMatcher": []
+            "isBackground": true,
+            "problemMatcher": {
+                "owner": "node",
+                "fileLocation": "relative",
+                "pattern":[
+                    {
+                        "regexp": "^([^\\\\s].*)\\\\((\\\\d+,\\\\d+)\\\\):\\\\s*(.*)$",
+                        "file": 1,
+                        "location": 2,
+                        "message": 3
+                    }
+                ],
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "Testitest",
+                    "endsPattern": "^No errors found."
+                }
+            }
         },
         {
             "label": "All: Dev",
@@ -36,7 +71,10 @@
                 "Gateway: Dev",
                 "Auth: Dev"
             ],
-            "group": "none",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
             "runOptions": {
                 "runOn": "folderOpen"
             }
