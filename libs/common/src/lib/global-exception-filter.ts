@@ -9,8 +9,10 @@ export class AllGlobalExceptionsFilter extends BaseExceptionFilter {
   catch(exception: any, host: ArgumentsHost): Observable<unknown> {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
-    if (this.isHttpError(exception.response)) {
-      //TODO this can still contain an invalid status code.
+    if (
+      this.isHttpError(exception.response) &&
+      exception.status.toString().length === 3
+    ) {
       response.status(exception.status).json(exception.response);
     } else {
       console.error(exception);

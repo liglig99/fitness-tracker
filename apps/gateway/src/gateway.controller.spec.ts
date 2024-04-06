@@ -16,7 +16,7 @@ describe('GatewayController', () => {
 
   describe('root', () => {
     it('should return "Hello World!"', () => {
-      expect(gatewayController.getHello()).toBe('Hello World!');
+      expect(gatewayController.getHello('token')).toBe('Hello World!');
     });
   });
 });

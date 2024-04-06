@@ -17,7 +17,7 @@ import { UserSchema } from './users/users.schema';
       signOptions: { expiresIn: '60s' },
     }),
     MongooseModule.forRoot(
-      'mongodb://admin:secret@mongodb/nest?authSource=admin',
+      'mongodb://admin:secret@mongodb/auth?authSource=admin',
     ),
     MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
   ],

@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Request } from '@nestjs/common';
 import { GatewayService } from './gateway.service';
 
 @Controller()
@@ -6,7 +6,12 @@ export class GatewayController {
   constructor(private readonly gatewayService: GatewayService) {}
 
   @Get()
-  getHello(): string {
-    return 'Hello World!';
+  async getHello(): Promise<string> {
+    return this.gatewayService.getHello();
+  }
+
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
   }
 }

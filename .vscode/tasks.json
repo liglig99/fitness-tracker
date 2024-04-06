@@ -1,5 +1,26 @@
 {
     "version": "2.0.0",
+    "problemMatcher": {
+        "owner": "typescript",
+        "fileLocation": ["relative", "${workspaceFolder}"],
+        "pattern":[
+            {
+                "regexp": "^ERROR in (.*?):(\\d+):(\\d+)",
+                "file": 1,
+                "line": 2,
+                "column": 3,
+            },
+            {
+                "regexp": "(.*)",
+                "message": 1
+            }
+        ],
+        "background": {
+            "activeOnStart": false,
+            "beginsPattern": "^(.*?)building your sources(.*)",
+            "endsPattern": "^(No errors found.|Found \\d+ error in \\d+ ms.)",
+        },
+    },
     "tasks": [
         {
             "label": "Gateway: Dev",
@@ -9,29 +30,13 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
+                "revealProblems": "onProblem",
                 "focus": false,
                 "panel": "shared",
                 "showReuseMessage": true,
                 "clear": true
             },
             "isBackground": true,
-            "problemMatcher": {
-                "owner": "node",
-                "fileLocation": "relative",
-                "pattern":[
-                    {
-                        "regexp": "^([^\\\\s].*)\\\\((\\\\d+,\\\\d+)\\\\):\\\\s*(.*)$",
-                        "file": 1,
-                        "location": 2,
-                        "message": 3
-                    }
-                ],
-                "background": {
-                    "activeOnStart": true,
-                    "beginsPattern": "Testitest",
-                    "endsPattern": "^No errors found."
-                }
-            }
         },
         {
             "label": "Auth: Dev",
@@ -41,29 +46,13 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
+                "revealProblems": "onProblem",
                 "focus": false,
                 "panel": "shared",
                 "showReuseMessage": true,
                 "clear": true
             },
             "isBackground": true,
-            "problemMatcher": {
-                "owner": "node",
-                "fileLocation": "relative",
-                "pattern":[
-                    {
-                        "regexp": "^([^\\\\s].*)\\\\((\\\\d+,\\\\d+)\\\\):\\\\s*(.*)$",
-                        "file": 1,
-                        "location": 2,
-                        "message": 3
-                    }
-                ],
-                "background": {
-                    "activeOnStart": true,
-                    "beginsPattern": "Testitest",
-                    "endsPattern": "^No errors found."
-                }
-            }
         },
         {
             "label": "All: Dev",
