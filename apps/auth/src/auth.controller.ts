@@ -2,7 +2,7 @@ import { Controller } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { SignInDto } from './dto/sign-in.dto';
-import { CreateUserDto } from './users/dto/create-user.dto';
+import { CreateUserDto } from './dto/create-user.dto';
 
 @Controller()
 export class AuthController {
