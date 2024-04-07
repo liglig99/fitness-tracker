@@ -4,25 +4,28 @@ import { UsersModule } from './users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { jwtConstants } from './auth.constants';
-import { MongooseModule } from '@nestjs/mongoose';
-import { UsersService } from './users/users.service';
-import { UserSchema } from './users/users.schema';
+import { ConfigModule } from '@nestjs/config';
+import { LoggerModule } from '@app/common';
+import * as Joi from 'joi';
 
 @Module({
   imports: [
+    LoggerModule,
     UsersModule,
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '60s' },
     }),
-    MongooseModule.forRoot(
-      'mongodb://admin:secret@mongodb/auth?authSource=admin',
-    ),
-    MongooseModule.forFeature([{ name: 'User', schema: UserSchema }]),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: 'apps/auth/.env',
+      validationSchema: Joi.object({
+        MONGODB_URI: Joi.string(),
+      }),
+    }),
   ],
-  providers: [AuthService, UsersService],
+  providers: [AuthService],
   controllers: [AuthController],
-  exports: [AuthService],
 })
 export class AuthModule {}

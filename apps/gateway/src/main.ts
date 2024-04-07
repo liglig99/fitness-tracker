@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { GatewayModule } from './gateway.module';
-import { AllGlobalExceptionsFilter } from '@app/common/lib/global-exception-filter';
+import { AllGlobalExceptionsFilter } from '@app/common/utils';
 
 async function bootstrap() {
   const app: INestApplication & INestMicroservice = await NestFactory.create(

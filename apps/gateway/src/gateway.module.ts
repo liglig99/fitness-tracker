@@ -6,7 +6,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from 'apps/auth/src/auth.constants';
 import { APP_GUARD } from '@nestjs/core';
-import { AuthGuard } from '@app/common/lib/auth.guard';
+import { AuthGuard } from '@app/common/guards';
 
 @Module({
   imports: [

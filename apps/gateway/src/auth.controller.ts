@@ -4,7 +4,7 @@ import { SignInDto } from 'apps/auth/src/dto/sign-in.dto';
 import { CreateUserDto } from 'apps/auth/src/dto/create-user.dto';
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
-import { Public } from '@app/common/lib/auth.guard';
+import { Public } from '@app/common/guards';
 
 @Controller('auth')
 export class AuthController {
