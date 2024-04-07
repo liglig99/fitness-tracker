@@ -4,9 +4,9 @@
   "name": "Backend Node.js & TypeScript",
   "dockerComposeFile": [
     "../../docker-compose.yml",
-    "../../docker-compose.devcontainer.yml"
+    "../docker-compose.devcontainer.yml"
   ],
-  "workspaceFolder": "/workspace",
+  "workspaceFolder": "/workspaces",
   "service": "devcontainer",
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
   // "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
@@ -19,8 +19,8 @@
       "extensions": ["mongodb.mongodb-vscode", "github.vscode-github-actions"]
     }
   },
-  "remoteUser": "node",
-  "postCreateCommand": "pnpm install"
+  "remoteUser": "node"
+//   "postCreateCommand": "pnpm install"
 
   // Features to add to the dev container. More info: https://containers.dev/features.
   // "features": {},
