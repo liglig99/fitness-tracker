@@ -1,0 +1,29 @@
+@baseUrl = http://localhost:3000
+
+# @name register
+POST {{baseUrl}}/auth/register 
+content-type: application/json
+
+{
+    "username": "testitest",
+    "email": "test@test.de",
+    "password": "test1234"
+}
+
+###
+
+// @name login
+POST {{baseUrl}}/auth/login 
+content-type: application/json
+
+{
+    "username": "testitest",
+    "password": "test1234"
+}
+
+###
+
+@authToken = {{login.response.body.access_token}}
+# @name getProfile
+GET {{baseUrl}}/profile
+Authorization: Bearer {{authToken}}

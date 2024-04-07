@@ -16,11 +16,15 @@
   },
   "customizations": {
     "vscode": {
-      "extensions": ["mongodb.mongodb-vscode", "github.vscode-github-actions"]
+      "extensions": [
+        "mongodb.mongodb-vscode",
+        "github.vscode-github-actions",
+        "humao.rest-client"
+      ]
     }
   },
   "remoteUser": "node"
-//   "postCreateCommand": "pnpm install"
+  //   "postCreateCommand": "pnpm install"
 
   // Features to add to the dev container. More info: https://containers.dev/features.
   // "features": {},
