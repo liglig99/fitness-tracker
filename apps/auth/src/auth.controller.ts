@@ -9,10 +9,10 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @MessagePattern({ cmd: 'signIn' })
-  async signIn(signInDto: SignInDto): Promise<string> {
+  async signIn(signInDto: SignInDto): Promise<{ access_token: string }> {
     return this.authService
       .signIn(signInDto.username, signInDto.password)
-      .then((result) => result.access_token);
+      .then((result) => result);
   }
 
   @MessagePattern({ cmd: 'register' })
