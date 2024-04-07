@@ -7,8 +7,8 @@ import {
 } from '@nestjs/common';
 import { JwtService, TokenExpiredError } from '@nestjs/jwt';
 import { jwtConstants } from 'apps/auth/src/auth.constants';
-import { Request } from 'express';
 import { Reflector } from '@nestjs/core';
+import { ExtractJwt } from 'passport-jwt';
 
 export const IS_PUBLIC_KEY = 'isPublic';
 export const Public = () => SetMetadata(IS_PUBLIC_KEY, true);
@@ -30,7 +30,16 @@ export class AuthGuard implements CanActivate {
     }
 
     const request = context.switchToHttp().getRequest();
-    const token = this.extractTokenFromHeader(request);
+
+    const cookieExtractor = function (req) {
+      let token = null;
+      if (req && req.cookies) {
+        token = req.cookies['access_token'];
+      }
+      return token;
+    };
+
+    const token = ExtractJwt.fromExtractors([cookieExtractor])(request);
     if (!token) {
       throw new UnauthorizedException();
     }
@@ -48,10 +57,5 @@ export class AuthGuard implements CanActivate {
       throw new UnauthorizedException();
     }
     return true;
-  }
-
-  private extractTokenFromHeader(request: Request): string | undefined {
-    const [type, token] = request.headers.authorization?.split(' ') ?? [];
-    return type === 'Bearer' ? token : undefined;
   }
 }

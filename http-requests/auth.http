@@ -5,8 +5,8 @@ POST {{baseUrl}}/auth/register
 content-type: application/json
 
 {
-    "username": "testitest",
-    "email": "test@test.de",
+    "username": "testitest1",
+    "email": "test1@test.de",
     "password": "test1234"
 }
 
@@ -23,7 +23,13 @@ content-type: application/json
 
 ###
 
-@authToken = {{login.response.body.access_token}}
 # @name getProfile
 GET {{baseUrl}}/profile
-Authorization: Bearer {{authToken}}
+Cookie: access_token=testitest
+
+###
+
+# @name refreshToken
+## @no-cookie-jar
+POST {{baseUrl}}/auth/refresh
+Cookie: refresh_token=eyJhbGcIOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RpdGVzdCIsInRva2VuSWQiOiIxZWUxNjAwNC04Y2FkLTQ0YTktYWRhMy1kNzJjYzMwMDYxZWQiLCJpYXQiOjE3MTI0OTk5NzIsImV4cCI6MTcxMzEwNDc3Mn0.gyepYCF59lpTCwfIbdldbKHyuaQVX8v92jVAmMUKdfw

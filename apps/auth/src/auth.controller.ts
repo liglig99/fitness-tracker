@@ -19,4 +19,11 @@ export class AuthController {
   register(createUserDto: CreateUserDto) {
     return this.authService.register(createUserDto);
   }
+
+  @MessagePattern({ cmd: 'refresh' })
+  async refresh(
+    token: string,
+  ): Promise<{ access_token: string; refresh_token: string }> {
+    return this.authService.refresh(token);
+  }
 }
