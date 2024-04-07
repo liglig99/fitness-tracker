@@ -19,9 +19,9 @@ import * as Joi from 'joi';
     }),
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: 'apps/auth/.env',
       validationSchema: Joi.object({
-        MONGODB_URI: Joi.string(),
+        MONGODB_URI: Joi.string().default('mongodb://admin:secret@mongodb/'),
+        MONGODB_DATABASE: Joi.string().default('auth'),
       }),
     }),
   ],
