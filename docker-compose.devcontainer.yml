@@ -3,7 +3,7 @@ services:
   devcontainer:
     image: mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye
     volumes:
-      - .:/workspace:cached
+      - fitness_tracker_source:/workspace
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 3000:3000
@@ -11,7 +11,7 @@ services:
     environment:
       - NODE_ENV=development
       - PORT=3000
-    entrypoint: ["tail", "-f", "/dev/null"]
-    
+    entrypoint: ['tail', '-f', '/dev/null']
+
 volumes:
-  node_modules:
+  fitness_tracker_source:
