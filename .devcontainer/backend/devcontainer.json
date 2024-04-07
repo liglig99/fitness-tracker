@@ -1,41 +1,43 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
 {
-	"name": "Backend Node.js & TypeScript",
-	"dockerComposeFile": [
-        "../../docker-compose.yml",
-        "../../docker-compose.devcontainer.yml"
-    ],
-	"workspaceFolder": "/workspace",
-	"service": "devcontainer",
-	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	// "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
-	"features": {
-		"ghcr.io/devcontainers-contrib/features/nestjs-cli:2": {}
-	},
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"mongodb.mongodb-vscode",
-				"github.vscode-github-actions"
-			]
-		}
-	},
-	"remoteUser": "node",
-	"postCreateCommand": "sudo chown node node_modules"
+  "name": "Backend Node.js & TypeScript",
+  "dockerComposeFile": [
+    "../../docker-compose.yml",
+    "../docker-compose.devcontainer.yml"
+  ],
+  "workspaceFolder": "/workspaces",
+  "service": "devcontainer",
+  // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+  // "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
+  "features": {
+    "ghcr.io/devcontainers-contrib/features/nestjs-cli:2": {},
+    "ghcr.io/devcontainers-contrib/features/mongosh-homebrew": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "mongodb.mongodb-vscode",
+        "github.vscode-github-actions",
+        "humao.rest-client"
+      ]
+    }
+  },
+  "remoteUser": "node"
+  //   "postCreateCommand": "pnpm install"
 
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	// "features": {},
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  // "features": {},
 
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
 
-	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "yarn install",
+  // Use 'postCreateCommand' to run commands after the container is created.
+  // "postCreateCommand": "yarn install",
 
-	// Configure tool-specific properties.
-	// "customizations": {},
+  // Configure tool-specific properties.
+  // "customizations": {},
 
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root"
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root"
 }

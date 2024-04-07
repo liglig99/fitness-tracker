@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class GatewayService {
-  getHello(): string {
+  async getHello(): Promise<string> {
     return 'Hello World!';
   }
 }

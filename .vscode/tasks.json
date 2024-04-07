@@ -1,5 +1,26 @@
 {
     "version": "2.0.0",
+    "problemMatcher": {
+        "owner": "typescript",
+        "fileLocation": ["relative", "${workspaceFolder}"],
+        "pattern":[
+            {
+                "regexp": "^ERROR in (.*?):(\\d+):(\\d+)",
+                "file": 1,
+                "line": 2,
+                "column": 3,
+            },
+            {
+                "regexp": "(.*)",
+                "message": 1
+            }
+        ],
+        "background": {
+            "activeOnStart": false,
+            "beginsPattern": "^(.*?)building your sources(.*)",
+            "endsPattern": "^(No errors found.|Found \\d+ error in \\d+ ms.)",
+        },
+    },
     "tasks": [
         {
             "label": "Gateway: Dev",
@@ -9,11 +30,13 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
+                "revealProblems": "onProblem",
                 "focus": false,
                 "panel": "shared",
                 "showReuseMessage": true,
                 "clear": true
-            }
+            },
+            "isBackground": true,
         },
         {
             "label": "Auth: Dev",
@@ -23,12 +46,13 @@
             "presentation": {
                 "echo": true,
                 "reveal": "silent",
+                "revealProblems": "onProblem",
                 "focus": false,
                 "panel": "shared",
                 "showReuseMessage": true,
                 "clear": true
             },
-            "problemMatcher": []
+            "isBackground": true,
         },
         {
             "label": "All: Dev",
@@ -36,7 +60,10 @@
                 "Gateway: Dev",
                 "Auth: Dev"
             ],
-            "group": "none",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
             "runOptions": {
                 "runOn": "folderOpen"
             }
