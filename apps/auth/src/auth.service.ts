@@ -10,9 +10,7 @@ import { CreateUserDto } from './users/dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-// import { BadRequestRpcException } from '@app/common/lib/bad-request-rpc-exceptin';
 import { RpcException } from '@nestjs/microservices';
-// import { RpcException } from '@nestjs/microservices';
 
 @Injectable()
 export class AuthService {
