@@ -5,6 +5,7 @@ services:
     volumes:
       - .:/workspaces:delegated
       - node_modules:/workspaces/node_modules
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 3000:3000
       - 9229:9229

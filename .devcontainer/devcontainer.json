@@ -12,7 +12,8 @@
   // "image": "mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye",
   "features": {
     "ghcr.io/devcontainers-contrib/features/nestjs-cli:2": {},
-    "ghcr.io/devcontainers-contrib/features/mongosh-homebrew": {}
+    "ghcr.io/devcontainers-contrib/features/mongosh-homebrew": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker": {}
   },
   "customizations": {
     "vscode": {
@@ -21,7 +22,8 @@
         "github.vscode-github-actions",
         "humao.rest-client",
         "mutantdino.resourcemonitor",
-        "GitHub.vscode-pull-request-github"
+        "GitHub.vscode-pull-request-github",
+        "ms-azuretools.vscode-docker"
       ]
     }
   },
