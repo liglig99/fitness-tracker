@@ -25,8 +25,8 @@
       ]
     }
   },
-  "remoteUser": "node"
-  // "postCreateCommand": "sudo chown node node_modules && pnpm install"
+  "remoteUser": "node",
+  "postCreateCommand": "sudo chown node node_modules"
 
   // Features to add to the dev container. More info: https://containers.dev/features.
   // "features": {},
