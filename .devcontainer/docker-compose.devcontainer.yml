@@ -3,15 +3,16 @@ services:
   devcontainer:
     image: mcr.microsoft.com/devcontainers/typescript-node:1-20-bullseye
     volumes:
-      - fitness-tracker-volume:/workspaces
-      # - node_modules:/workspace/node_modules
+      - .:/workspaces:delegated
+      - node_modules:/workspaces/node_modules
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - 3000:3000
       - 9229:9229
     environment:
       - NODE_ENV=development
       - PORT=3000
-    entrypoint: [ "tail", "-f", "/dev/null" ]
+    entrypoint: ['tail', '-f', '/dev/null']
 
   mongo-express:
     image: mongo-express
@@ -24,4 +25,4 @@ services:
       ME_CONFIG_MONGODB_URL: mongodb://admin:secret@mongodb:27017/
 
 volumes:
-  fitness-tracker-volume:
+  node_modules:
