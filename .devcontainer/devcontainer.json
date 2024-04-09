@@ -13,7 +13,10 @@
   "features": {
     "ghcr.io/devcontainers-contrib/features/nestjs-cli:2": {},
     "ghcr.io/devcontainers-contrib/features/mongosh-homebrew": {},
-    "ghcr.io/devcontainers/features/docker-outside-of-docker": {}
+    "ghcr.io/devcontainers/features/docker-outside-of-docker": {},
+    "ghcr.io/nordcominc/devcontainer-features/android-sdk": {
+      "platform": "34"
+    }
   },
   "customizations": {
     "vscode": {
@@ -23,12 +26,13 @@
         "humao.rest-client",
         "mutantdino.resourcemonitor",
         "GitHub.vscode-pull-request-github",
-        "ms-azuretools.vscode-docker"
+        "ms-azuretools.vscode-docker",
+        "expo.vscode-expo-tools"
       ]
     }
   },
   "remoteUser": "node",
-  "postCreateCommand": "sudo chown node node_modules"
+  "postCreateCommand": "sudo chown node node_modules && sudo chown node frontend/node_modules"
 
   // Features to add to the dev container. More info: https://containers.dev/features.
   // "features": {},
