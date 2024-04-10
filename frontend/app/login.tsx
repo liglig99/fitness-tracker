@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useRouter } from 'expo-router';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
-import customFetch from './customFetch';
-import styles from './styles';
+import customFetch from '../customFetch';
+import styles from '../styles';
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = () => {
+  const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -20,7 +22,7 @@ const LoginScreen = ({ navigation }) => {
         }),
       };
       await customFetch('http://192.168.178.79:3000/auth/login', options);
-      navigation.navigate('Home');
+      router.back();
     } catch (error) {
       console.error(error); // todo handle wrong credentials
     }
