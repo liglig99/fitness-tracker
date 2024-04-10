@@ -1,0 +1,36 @@
+@baseUrl = http://localhost:3000
+
+POST {{baseUrl}}/workouts/create-excercise
+content-type: application/json
+
+{
+    "name": "Bench Press"
+}
+
+###
+
+GET {{baseUrl}}/workouts/excercises
+
+###
+
+GET {{baseUrl}}/workouts/excercises?filter=bench
+
+###
+
+POST {{baseUrl}}/workouts/create-workout
+content-type: application/json
+
+{
+    "name": "First Workout",
+    "excercises": [
+        {
+            "exercise": "testitest",
+            "sets": 3,
+            "reps": 10
+        }
+    ]
+}
+
+###
+
+GET {{baseUrl}}/workouts/workouts
