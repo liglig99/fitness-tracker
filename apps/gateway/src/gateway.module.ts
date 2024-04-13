@@ -8,6 +8,7 @@ import { jwtConstants } from 'apps/auth/src/auth.constants';
 import { APP_GUARD } from '@nestjs/core';
 import { WorkoutsController } from './workouts.controller';
 import { AuthGuard } from '@app/common';
+import { LoggerModule } from '@app/common';
 
 @Module({
   imports: [
