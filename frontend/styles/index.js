@@ -23,6 +23,18 @@ const styles = StyleSheet.create({
     padding: 16,
     backgroundColor: COLORS.backgroundColor1,
   },
+  cardsContainer: {
+    paddingVertical: 16,
+  },
+  card: {
+    width: 100,
+    height: 100,
+    margin: 10,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: COLORS.interactiveColor2,
+  },
   title: {
     fontSize: 24,
     fontWeight: 'bold',
