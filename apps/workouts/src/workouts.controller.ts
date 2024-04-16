@@ -6,6 +6,8 @@ import { Excercise } from './entities/excercise.schema';
 import { PaginatedResult } from '@app/common/lib/paginated-result';
 import { CreateWorkoutDto } from './dto/create-workout.dto';
 import { Workout } from './entities/workout.schema';
+import { WorkoutLog } from './entities/workout-log-schema';
+import { CreateWorkoutLogDto } from './dto/create-workout-log.dto';
 
 @Controller()
 export class WorkoutsController {
@@ -41,5 +43,19 @@ export class WorkoutsController {
     filter,
   }): Promise<PaginatedResult<Workout>> {
     return this.workoutsService.getWorkouts({ page, limit, filter });
+  }
+
+  @MessagePattern({ cmd: 'saveWorkout' })
+  async saveWorkout(workout: CreateWorkoutLogDto): Promise<WorkoutLog> {
+    return this.workoutsService.saveWorkout(workout);
+  }
+
+  @MessagePattern({ cmd: 'getWorkoutLogs' })
+  async getWorkoutLogs({
+    page,
+    limit,
+    sortOrder,
+  }): Promise<PaginatedResult<WorkoutLog>> {
+    return this.workoutsService.getWorkoutLogs({ page, limit, sortOrder });
   }
 }

@@ -4,6 +4,7 @@ import { ClientProxy } from '@nestjs/microservices';
 import { Public } from '@app/common/lib/auth.guard';
 import { CreateExcerciseDto } from 'apps/workouts/src/dto/create-excercise.dto';
 import { CreateWorkoutDto } from 'apps/workouts/src/dto/create-workout.dto';
+import { CreateWorkoutLogDto } from 'apps/workouts/src/dto/create-workout-log.dto';
 
 @Public() //TODO: Remove this line to make this endpoint private
 @Controller('workouts')
@@ -51,6 +52,23 @@ export class WorkoutsController {
     return this.workoutsClient.send(
       { cmd: 'getWorkouts' },
       { page, limit, filter },
+    );
+  }
+
+  @Post('save-workout')
+  async saveWorkout(@Body() workout: CreateWorkoutLogDto): Promise<any> {
+    return this.workoutsClient.send({ cmd: 'saveWorkout' }, workout);
+  }
+
+  @Get('workout-logs')
+  async getWorkoutLogs(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
+    @Query('sortOrder') sortOrder: string = 'desc',
+  ): Promise<any> {
+    return this.workoutsClient.send(
+      { cmd: 'getWorkoutLogs' },
+      { page, limit, sortOrder },
     );
   }
 }

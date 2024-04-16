@@ -7,6 +7,8 @@ import { RpcException } from '@nestjs/microservices';
 import { PaginatedResult } from '@app/common/lib/paginated-result';
 import { CreateWorkoutDto } from './dto/create-workout.dto';
 import { Workout, WorkoutDocument } from './entities/workout.schema';
+import { WorkoutLog, WorkoutLogDocument } from './entities/workout-log-schema';
+import { CreateWorkoutLogDto } from './dto/create-workout-log.dto';
 
 @Injectable()
 export class WorkoutsService {
@@ -15,6 +17,8 @@ export class WorkoutsService {
     private excerciseModel: Model<ExcerciseDocument>,
     @InjectModel(Workout.name)
     private workoutModel: Model<WorkoutDocument>,
+    @InjectModel(WorkoutLog.name)
+    private workoutLogModel: Model<WorkoutLogDocument>,
   ) {}
   async createExcercise(createExcerciseDto: CreateExcerciseDto): Promise<any> {
     const createdExcercise = new this.excerciseModel(createExcerciseDto);
@@ -92,6 +96,40 @@ export class WorkoutsService {
     const totalCount = await this.workoutModel
       .countDocuments({ name: { $regex: filter, $options: 'i' } })
       .exec();
+
+    return {
+      data,
+      page,
+      limit,
+      totalCount,
+    };
+  }
+
+  async saveWorkout(workout: CreateWorkoutLogDto): Promise<WorkoutLog> {
+    const createdWorkoutLog = new this.workoutLogModel(workout);
+
+    try {
+      return await createdWorkoutLog.save();
+    } catch (error) {
+      throw new RpcException(error);
+    }
+  }
+
+  async getWorkoutLogs({
+    page,
+    limit,
+    sortOrder,
+  }): Promise<PaginatedResult<WorkoutLog>> {
+    const skip = (page - 1) * limit;
+    const sort = sortOrder === 'asc' ? 1 : -1;
+
+    const data = await this.workoutLogModel
+      .find()
+      .sort({ endTime: sort })
+      .skip(skip)
+      .limit(limit)
+      .exec();
+    const totalCount = await this.workoutLogModel.countDocuments().exec();
 
     return {
       data,

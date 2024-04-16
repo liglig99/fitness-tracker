@@ -4,6 +4,7 @@ import { WorkoutsService } from './workouts.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { WorkoutSchema } from './entities/workout.schema';
 import { ExcerciseSchema } from './entities/excercise.schema';
+import { WorkoutLogSchema } from './entities/workout-log-schema';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { ExcerciseSchema } from './entities/excercise.schema';
     MongooseModule.forFeature([
       { name: 'Workout', schema: WorkoutSchema },
       { name: 'Excercise', schema: ExcerciseSchema },
+      { name: 'WorkoutLog', schema: WorkoutLogSchema },
     ]),
   ],
   controllers: [WorkoutsController],
