@@ -1,6 +1,6 @@
 @baseUrl = http://localhost:3000
 
-POST {{baseUrl}}/workouts/create-excercise
+POST {{baseUrl}}/workouts/create-exercise
 content-type: application/json
 
 {
@@ -8,21 +8,21 @@ content-type: application/json
 }
 
 ###
-# @name excercises
-GET {{baseUrl}}/workouts/excercises
+# @name exercises
+GET {{baseUrl}}/workouts/exercises
 
 ###
 
-GET {{baseUrl}}/workouts/excercises?filter=bench
+GET {{baseUrl}}/workouts/exercises?filter=bench
 
 ###
-
+# @name create_workout
 POST {{baseUrl}}/workouts/create-workout
 content-type: application/json
 
 {
     "name": "First Workout",
-    "excercises": [
+    "exercises": [
         {
             "exercise": "testitest",
             "sets": 3,
@@ -36,6 +36,10 @@ content-type: application/json
 GET {{baseUrl}}/workouts/workouts
 
 ###
+
+GET {{baseUrl}}/workouts/workout/{{create_workout.response.body._id}}
+
+###
 # @name save_workout
 
 POST {{baseUrl}}/workouts/save-workout
@@ -46,7 +50,7 @@ content-type: application/json
     "endTime": "2022-01-01T00:00:10Z",
     "exercises": [
         {
-            "exercise": "{{excercises.response.body.data.[0]._id}}",
+            "exercise": "{{exercises.response.body.data.[0]._id}}",
             "sets": 3,
             "reps": 10,
             "weight": 100

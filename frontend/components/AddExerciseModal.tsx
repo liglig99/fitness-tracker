@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { Modal, Text, TextInput, TouchableOpacity } from 'react-native';
 import styles from '../styles';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import NumericInput from './NumericInput';
 
 const AddExerciseModal = ({ modalVisible, onClose, onAddExercise }) => {
-  const [name, setName] = useState('');
-  const [reps, setReps] = useState('');
-  const [sets, setSets] = useState('');
+  const [exerciseName, setExerciseName] = useState('');
+  const [reps, setReps] = useState(12);
+  const [sets, setSets] = useState(3);
 
   return (
     <Modal
@@ -19,24 +20,24 @@ const AddExerciseModal = ({ modalVisible, onClose, onAddExercise }) => {
         <TextInput
           style={styles.input}
           placeholder="Exercise Name"
-          value={name}
-          onChangeText={setName}
+          value={exerciseName}
+          onChangeText={setExerciseName}
         />
-        <TextInput
-          style={styles.input}
-          placeholder="Reps"
-          value={reps}
-          onChangeText={setReps}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Sets"
-          value={sets}
-          onChangeText={setSets}
-        />
+        <NumericInput
+          title="Reps"
+          initialValue={12}
+          onChange={setReps}
+        ></NumericInput>
+        <NumericInput
+          title="Sets"
+          initialValue={3}
+          onChange={setSets}
+        ></NumericInput>
         <TouchableOpacity
           style={styles.buttonContainer}
-          onPress={() => onAddExercise({ name, reps, sets })}
+          onPress={() =>
+            onAddExercise({ exercise: { name: exerciseName }, reps, sets })
+          }
         >
           <Text style={styles.buttonText}>Add Exercise</Text>
         </TouchableOpacity>

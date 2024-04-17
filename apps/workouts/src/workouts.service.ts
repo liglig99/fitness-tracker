@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { CreateExcerciseDto } from './dto/create-excercise.dto';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { CreateExerciseDto } from './dto/create-exercise.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Excercise, ExcerciseDocument } from './entities/excercise.schema';
+import { Exercise, ExerciseDocument } from './entities/exercise.schema';
 import { Model } from 'mongoose';
 import { RpcException } from '@nestjs/microservices';
 import { PaginatedResult } from '@app/common/lib/paginated-result';
@@ -13,36 +13,36 @@ import { CreateWorkoutLogDto } from './dto/create-workout-log.dto';
 @Injectable()
 export class WorkoutsService {
   constructor(
-    @InjectModel(Excercise.name)
-    private excerciseModel: Model<ExcerciseDocument>,
+    @InjectModel(Exercise.name)
+    private exerciseModel: Model<ExerciseDocument>,
     @InjectModel(Workout.name)
     private workoutModel: Model<WorkoutDocument>,
     @InjectModel(WorkoutLog.name)
     private workoutLogModel: Model<WorkoutLogDocument>,
   ) {}
-  async createExcercise(createExcerciseDto: CreateExcerciseDto): Promise<any> {
-    const createdExcercise = new this.excerciseModel(createExcerciseDto);
+  async createExercise(createExerciseDto: CreateExerciseDto): Promise<any> {
+    const createdExercise = new this.exerciseModel(createExerciseDto);
 
     try {
-      return await createdExcercise.save();
+      return await createdExercise.save();
     } catch (error) {
       throw new RpcException(error);
     }
   }
 
-  async getExcercises({
+  async getExercises({
     page,
     limit,
     filter = '',
-  }): Promise<PaginatedResult<Excercise>> {
+  }): Promise<PaginatedResult<Exercise>> {
     const skip = (page - 1) * limit;
 
-    const data = await this.excerciseModel
+    const data = await this.exerciseModel
       .find({ name: { $regex: filter, $options: 'i' } })
       .skip(skip)
       .limit(limit)
       .exec();
-    const totalCount = await this.excerciseModel
+    const totalCount = await this.exerciseModel
       .countDocuments({ name: { $regex: filter, $options: 'i' } })
       .exec();
 
@@ -56,23 +56,23 @@ export class WorkoutsService {
 
   async createWorkout(createWorkoutDto: CreateWorkoutDto): Promise<Workout> {
     try {
-      const excercises = [];
+      const exercises = [];
 
-      for (const excerciseDto of createWorkoutDto.excercises) {
-        const excercise = new this.excerciseModel({
-          name: excerciseDto.exercise,
+      for (const exerciseDto of createWorkoutDto.exercises) {
+        const exercise = new this.exerciseModel({
+          name: exerciseDto.exercise,
         });
-        await excercise.save(); //TODO: check if excercises already exist. Do we want to assume that they exist and expect an id here?
-        excercises.push({
-          excercise: excercise._id,
-          sets: excerciseDto.sets,
-          reps: excerciseDto.reps,
+        await exercise.save(); //TODO: check if exercises already exist. Do we want to assume that they exist and expect an id here?
+        exercises.push({
+          exercise: exercise._id,
+          sets: exerciseDto.sets,
+          reps: exerciseDto.reps,
         });
       }
 
       const createdWorkout = new this.workoutModel({
         ...createWorkoutDto,
-        excercises: excercises,
+        exercises: exercises,
       });
 
       return await createdWorkout.save();
@@ -103,6 +103,18 @@ export class WorkoutsService {
       limit,
       totalCount,
     };
+  }
+
+  async getWorkoutById(id: string): Promise<Workout> {
+    const workout = await this.workoutModel
+      .findById(id)
+      .populate('exercises.exercise')
+      .exec();
+
+    if (!workout) {
+      throw new RpcException(new NotFoundException('Workout not found'));
+    }
+    return workout;
   }
 
   async saveWorkout(workout: CreateWorkoutLogDto): Promise<WorkoutLog> {

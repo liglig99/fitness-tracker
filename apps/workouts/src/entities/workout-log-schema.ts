@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
-import { Excercise } from './excercise.schema';
+import { Exercise } from './exercise.schema';
 import { Workout } from './workout.schema';
 
 export type WorkoutLogDocument = HydratedDocument<WorkoutLog>;
@@ -16,7 +16,7 @@ export class WorkoutLog {
   @Prop({
     type: [
       {
-        excercise: { type: Types.ObjectId, ref: 'Excercise' },
+        exercise: { type: Types.ObjectId, ref: 'Exercise' },
         sets: Number,
         reps: Number,
         weight: Number,
@@ -24,7 +24,7 @@ export class WorkoutLog {
     ],
   })
   exercises: {
-    exercise: Types.ObjectId | Excercise;
+    exercise: Types.ObjectId | Exercise;
     sets: number;
     reps: number;
     weight: number;

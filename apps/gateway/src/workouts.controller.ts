@@ -1,10 +1,20 @@
-import { Body, Controller, Get, Inject, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { GatewayService } from './gateway.service';
 import { ClientProxy } from '@nestjs/microservices';
 import { Public } from '@app/common/lib/auth.guard';
-import { CreateExcerciseDto } from 'apps/workouts/src/dto/create-excercise.dto';
+import { CreateExerciseDto } from 'apps/workouts/src/dto/create-exercise.dto';
 import { CreateWorkoutDto } from 'apps/workouts/src/dto/create-workout.dto';
 import { CreateWorkoutLogDto } from 'apps/workouts/src/dto/create-workout-log.dto';
+import { ObjectId } from 'mongoose';
+import { ValidateObjectIdPipe } from '@app/common/lib/validate-objectid-pipe';
 
 @Public() //TODO: Remove this line to make this endpoint private
 @Controller('workouts')
@@ -14,24 +24,24 @@ export class WorkoutsController {
     @Inject('WORKOUTS_SERVICE') private readonly workoutsClient: ClientProxy,
   ) {}
 
-  @Post('create-excercise')
-  async createExcercise(
-    @Body() createExcerciseDto: CreateExcerciseDto,
+  @Post('create-exercise')
+  async createExercise(
+    @Body() createExerciseDto: CreateExerciseDto,
   ): Promise<any> {
     return this.workoutsClient.send(
-      { cmd: 'createExcercise' },
-      createExcerciseDto,
+      { cmd: 'createExercise' },
+      createExerciseDto,
     );
   }
 
-  @Get('excercises')
-  async getExcercises(
+  @Get('exercises')
+  async getExercises(
     @Query('page') page: number = 1,
     @Query('limit') limit: number = 10,
     @Query('filter') filter: string = '',
   ): Promise<any> {
     return this.workoutsClient.send(
-      { cmd: 'getExcercises' },
+      { cmd: 'getExercises' },
       { page, limit, filter },
     );
   }
@@ -53,6 +63,13 @@ export class WorkoutsController {
       { cmd: 'getWorkouts' },
       { page, limit, filter },
     );
+  }
+
+  @Get('workout/:id')
+  async getWorkoutById(
+    @Param('id', new ValidateObjectIdPipe()) id: ObjectId,
+  ): Promise<any> {
+    return this.workoutsClient.send({ cmd: 'getWorkoutById' }, id);
   }
 
   @Post('save-workout')

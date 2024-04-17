@@ -18,5 +18,5 @@ export class CreateWorkoutDto {
 
   @ValidateNested({ each: true })
   @Type(() => WorkoutExerciseDto)
-  excercises: WorkoutExerciseDto[];
+  exercises: WorkoutExerciseDto[];
 }

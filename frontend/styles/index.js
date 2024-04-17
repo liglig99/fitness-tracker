@@ -67,9 +67,15 @@ const styles = StyleSheet.create({
   buttonText: {
     color: COLORS.textColor1,
     fontSize: 16,
+    textAlign: 'center',
   },
   headerButton: {
     marginRight: 15,
+  },
+  subtitile: {
+    fontSize: 16,
+    color: COLORS.textColor2,
+    textAlign: 'left',
   },
 });
 

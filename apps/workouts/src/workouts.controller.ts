@@ -1,8 +1,8 @@
 import { Controller } from '@nestjs/common';
 import { WorkoutsService } from './workouts.service';
 import { MessagePattern } from '@nestjs/microservices';
-import { CreateExcerciseDto } from './dto/create-excercise.dto';
-import { Excercise } from './entities/excercise.schema';
+import { CreateExerciseDto } from './dto/create-exercise.dto';
+import { Exercise } from './entities/exercise.schema';
 import { PaginatedResult } from '@app/common/lib/paginated-result';
 import { CreateWorkoutDto } from './dto/create-workout.dto';
 import { Workout } from './entities/workout.schema';
@@ -13,22 +13,22 @@ import { CreateWorkoutLogDto } from './dto/create-workout-log.dto';
 export class WorkoutsController {
   constructor(private readonly workoutsService: WorkoutsService) {}
 
-  @MessagePattern({ cmd: 'createExcercise' })
-  async createExcercise(
-    createExcerciseDto: CreateExcerciseDto,
-  ): Promise<Excercise> {
+  @MessagePattern({ cmd: 'createExercise' })
+  async createExercise(
+    createExerciseDto: CreateExerciseDto,
+  ): Promise<Exercise> {
     return this.workoutsService
-      .createExcercise(createExcerciseDto)
+      .createExercise(createExerciseDto)
       .then((result) => result);
   }
 
-  @MessagePattern({ cmd: 'getExcercises' })
-  async getExcercises({
+  @MessagePattern({ cmd: 'getExercises' })
+  async getExercises({
     page,
     limit,
     filter,
-  }): Promise<PaginatedResult<Excercise>> {
-    return this.workoutsService.getExcercises({ page, limit, filter });
+  }): Promise<PaginatedResult<Exercise>> {
+    return this.workoutsService.getExercises({ page, limit, filter });
   }
 
   @MessagePattern({ cmd: 'createWorkout' })
@@ -43,6 +43,11 @@ export class WorkoutsController {
     filter,
   }): Promise<PaginatedResult<Workout>> {
     return this.workoutsService.getWorkouts({ page, limit, filter });
+  }
+
+  @MessagePattern({ cmd: 'getWorkoutById' })
+  async getWorkoutById(id: string): Promise<Workout> {
+    return this.workoutsService.getWorkoutById(id);
   }
 
   @MessagePattern({ cmd: 'saveWorkout' })

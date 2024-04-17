@@ -1,24 +1,47 @@
 import React, { useState } from 'react';
-import {
-  Text,
-  TextInput,
-  TouchableOpacity,
-  ScrollView,
-  SafeAreaView,
-} from 'react-native';
+import { Text, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
 import styles from '../../styles';
-import AddExerciseModal from '../../components/AddExcerciseModal';
-import Card from '../../components/Card';
+import AddExerciseModal from '../../components/AddExerciseModal';
 import AddCard from '../../components/AddCard';
+import ExerciseCard from '../../components/ExerciseCard';
+import HorizontalScrollView from '../../components/HorizontalScollView';
+import { useRouter } from 'expo-router';
+import customFetch from '../../customFetch';
 
 const CreateWorkout = () => {
+  const router = useRouter();
   const [name, setName] = useState('');
   const [exercises, setExercises] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const handleSubmit = () => {
-    // Handle the form submission here
-    // For example, you can call an API to create a workout
+  const handleSubmit = async () => {
+    try {
+      //TODO: shoener machen
+      const flatExercises = exercises.map((item) => ({
+        exercise: item.exercise.name,
+        reps: item.reps,
+        sets: item.sets,
+      }));
+      const response = await customFetch(
+        'http://192.168.178.79:3000/workouts/create-workout',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ name, exercises: flatExercises }),
+        },
+      );
+
+      if (!response.ok) {
+        console.log(JSON.stringify({ name, exercises: flatExercises }));
+        throw new Error('Failed to create workout');
+      }
+
+      router.navigate('home');
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleAddExercise = (exercise) => {
@@ -35,18 +58,14 @@ const CreateWorkout = () => {
         value={name}
         onChangeText={setName}
       />
-      <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      <HorizontalScrollView title="Exercises">
         {exercises.map((exercise, index) => (
-          <Card key={index}>
-            <Text style={styles.buttonText}>{exercise.name}</Text>
-            <Text style={styles.buttonText}>{exercise.reps}</Text>
-            <Text style={styles.buttonText}>{exercise.sets}</Text>
-          </Card>
+          <ExerciseCard key={index} exercise={exercise} />
         ))}
         <TouchableOpacity onPress={() => setModalVisible(true)}>
           <AddCard />
         </TouchableOpacity>
-      </ScrollView>
+      </HorizontalScrollView>
       <TouchableOpacity style={styles.buttonContainer} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Create Workout</Text>
       </TouchableOpacity>
