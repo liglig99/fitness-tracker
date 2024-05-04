@@ -16,7 +16,7 @@ import { CreateWorkoutLogDto } from 'apps/workouts/src/dto/create-workout-log.dt
 import { ObjectId } from 'mongoose';
 import { ValidateObjectIdPipe } from '@app/common/lib/validate-objectid-pipe';
 
-@Public() //TODO: Remove this line to make this endpoint private
+//@Public() //TODO: Remove this line to make this endpoint private
 @Controller('workouts')
 export class WorkoutsController {
   constructor(

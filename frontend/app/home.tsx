@@ -6,7 +6,7 @@ import styles from '../styles';
 import Card from '../components/Card';
 import AddCard from '../components/AddCard';
 import HorizontalScrollView from '../components/HorizontalScollView';
-import customFetch from '../customFetch';
+import instance from '../interceptors';
 import { useFocusEffect } from '@react-navigation/native';
 
 const HomeScreen = () => {
@@ -17,14 +17,11 @@ const HomeScreen = () => {
     React.useCallback(() => {
       const fetchWorkouts = async () => {
         try {
-          const response = await customFetch(
-            'http://192.168.178.79:3000/workouts/workouts',
-          );
-          if (!response.ok) {
+          const response = await instance.get('/workouts/workouts');
+          if (response.status !== 200) {
             throw new Error('Failed to fetch workouts');
           }
-          const data = await response.json();
-          setWorkouts(data.data);
+          setWorkouts(response.data.data);
         } catch (error) {
           console.error(error);
         }

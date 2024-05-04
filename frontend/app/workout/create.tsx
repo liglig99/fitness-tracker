@@ -6,7 +6,7 @@ import AddCard from '../../components/AddCard';
 import ExerciseCard from '../../components/ExerciseCard';
 import HorizontalScrollView from '../../components/HorizontalScollView';
 import { useRouter } from 'expo-router';
-import customFetch from '../../customFetch';
+import instance from '../../interceptors';
 
 const CreateWorkout = () => {
   const router = useRouter();
@@ -23,18 +23,12 @@ const CreateWorkout = () => {
         reps: item.reps,
         sets: item.sets,
       }));
-      const response = await customFetch(
-        'http://192.168.178.79:3000/workouts/create-workout',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ name, exercises: flatExercises }),
-        },
+      const response = await instance.post(
+        '/workouts/create-workout',
+        JSON.stringify({ name, exercises: flatExercises }),
       );
 
-      if (!response.ok) {
+      if (response.status !== 200) {
         console.log(JSON.stringify({ name, exercises: flatExercises }));
         throw new Error('Failed to create workout');
       }

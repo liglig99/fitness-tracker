@@ -4,6 +4,7 @@ import { SafeAreaView, Text, TouchableOpacity } from 'react-native';
 import styles from '../../styles';
 import ExerciseCard from '../../components/ExerciseCard';
 import HorizontalScrollView from '../../components/HorizontalScollView';
+import instance from '../../interceptors';
 
 const WorkoutPage = () => {
   const { id } = useLocalSearchParams();
@@ -12,16 +13,13 @@ const WorkoutPage = () => {
   useEffect(() => {
     const fetchWorkout = async () => {
       try {
-        const response = await fetch(
-          `http://192.168.178.79:3000/workouts/workout/${id}`,
-        );
+        const response = await instance.get(`/workouts/workout/${id}`);
 
-        if (!response.ok) {
+        if (response.status !== 200) {
           throw new Error('Failed to fetch workout');
         }
 
-        const data = await response.json();
-        setWorkout(data);
+        setWorkout(response.data);
       } catch (error) {
         console.error(error);
       }

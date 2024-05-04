@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'expo-router';
 import { Text, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
-import customFetch from '../customFetch';
+import instance from '../interceptors';
 import styles from '../styles';
 
 const LoginScreen = () => {
@@ -11,17 +11,18 @@ const LoginScreen = () => {
 
   const handleLogin = async () => {
     try {
-      const options = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
+      await instance.post(
+        '/auth/login',
+        JSON.stringify({
           username,
           password,
         }),
-      };
-      await customFetch('http://192.168.178.79:3000/auth/login', options);
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        },
+      );
       router.back();
     } catch (error) {
       console.error(error); // todo handle wrong credentials
