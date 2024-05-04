@@ -1,6 +1,6 @@
 import { useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { SafeAreaView, Text } from 'react-native';
+import { SafeAreaView, Text, TouchableOpacity } from 'react-native';
 import styles from '../../styles';
 import ExerciseCard from '../../components/ExerciseCard';
 import HorizontalScrollView from '../../components/HorizontalScollView';
@@ -38,6 +38,9 @@ const WorkoutPage = () => {
           <ExerciseCard key={index} exercise={exercise} />
         ))}
       </HorizontalScrollView>
+      <TouchableOpacity style={styles.buttonContainer}>
+        <Text style={styles.buttonText}>Start Workout</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };

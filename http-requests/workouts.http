@@ -13,7 +13,7 @@ GET {{baseUrl}}/workouts/exercises
 
 ###
 
-GET {{baseUrl}}/workouts/exercises?filter=bench
+GET {{baseUrl}}/workouts/exercises
 
 ###
 # @name create_workout

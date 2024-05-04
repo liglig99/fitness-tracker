@@ -1,11 +1,29 @@
 import React from 'react';
-import { ScrollView, View, Text } from 'react-native';
+import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
+
 import styles from '../styles';
 
-const HorizontalScrollView = ({ title, children }) => {
+interface HorizontalScrollViewProps {
+  title: string;
+  children: React.ReactNode;
+  showAllAction?: () => void;
+}
+
+const HorizontalScrollView: React.FC<HorizontalScrollViewProps> = ({
+  title,
+  children,
+  showAllAction,
+}) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.subtitile}>{title}</Text>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+        <Text style={styles.subtitile}>{title}</Text>
+        {showAllAction && (
+          <TouchableOpacity onPress={showAllAction}>
+            <Text style={styles.subtitile}>Show all</Text>
+          </TouchableOpacity>
+        )}
+      </View>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}

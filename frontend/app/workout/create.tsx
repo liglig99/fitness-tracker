@@ -12,6 +12,7 @@ const CreateWorkout = () => {
   const router = useRouter();
   const [name, setName] = useState('');
   const [exercises, setExercises] = useState([]);
+  const [selectedExercise, setSelectedExercise] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleSubmit = async () => {
@@ -45,8 +46,28 @@ const CreateWorkout = () => {
   };
 
   const handleAddExercise = (exercise) => {
+    if (selectedExercise) {
+      handleUpdateExercise(exercise);
+      return;
+    }
     setExercises([...exercises, exercise]);
     setModalVisible(false);
+  };
+
+  const handleUpdateExercise = (updatedExercise) => {
+    setExercises(
+      exercises.map((exercise) =>
+        exercise.id === updatedExercise.id ? updatedExercise : exercise,
+      ),
+    );
+    setSelectedExercise(null);
+    setModalVisible(false);
+  };
+
+  const handleExerciseClick = (exercise) => {
+    // console.log(exercise);
+    setSelectedExercise(exercise);
+    setModalVisible(true);
   };
 
   return (
@@ -60,7 +81,12 @@ const CreateWorkout = () => {
       />
       <HorizontalScrollView title="Exercises">
         {exercises.map((exercise, index) => (
-          <ExerciseCard key={index} exercise={exercise} />
+          <TouchableOpacity
+            key={index}
+            onPress={() => handleExerciseClick(exercise)}
+          >
+            <ExerciseCard exercise={exercise} />
+          </TouchableOpacity>
         ))}
         <TouchableOpacity onPress={() => setModalVisible(true)}>
           <AddCard />
@@ -73,6 +99,7 @@ const CreateWorkout = () => {
         modalVisible={modalVisible}
         onClose={() => setModalVisible(false)}
         onAddExercise={handleAddExercise}
+        exercise={selectedExercise}
       />
     </SafeAreaView>
   );

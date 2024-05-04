@@ -1,21 +1,11 @@
-import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import styles from '../styles';
 
-const NumericInput = ({
-  title,
-  initialValue,
-  onChange,
-  min = 0,
-  max = 100,
-}) => {
-  const [value, setValue] = useState(initialValue);
-
+const NumericInput = ({ title, value, onChange, min = 0, max = 100 }) => {
   const handleMinus = () => {
     if (value > min) {
       const newValue = value - 1;
-      setValue(newValue);
       onChange(newValue);
     }
   };
@@ -23,7 +13,6 @@ const NumericInput = ({
   const handlePlus = () => {
     if (value < max) {
       const newValue = value + 1;
-      setValue(newValue);
       onChange(newValue);
     }
   };
