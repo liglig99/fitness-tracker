@@ -1,72 +1,84 @@
 {
-    "version": "2.0.0",
-    "problemMatcher": {
-        "owner": "typescript",
-        "fileLocation": ["relative", "${workspaceFolder}"],
-        "pattern":[
-            {
-                "regexp": "^ERROR in (.*?):(\\d+):(\\d+)",
-                "file": 1,
-                "line": 2,
-                "column": 3,
-            },
-            {
-                "regexp": "(.*)",
-                "message": 1
-            }
-        ],
-        "background": {
-            "activeOnStart": false,
-            "beginsPattern": "^(.*?)building your sources(.*)",
-            "endsPattern": "^(No errors found.|Found \\d+ error in \\d+ ms.)",
-        },
+  "version": "2.0.0",
+  "problemMatcher": {
+    "owner": "typescript",
+    "fileLocation": ["relative", "${workspaceFolder}"],
+    "pattern": [
+      {
+        "regexp": "^ERROR in (.*?):(\\d+):(\\d+)",
+        "file": 1,
+        "line": 2,
+        "column": 3
+      },
+      {
+        "regexp": "(.*)",
+        "message": 1
+      }
+    ],
+    "background": {
+      "activeOnStart": false,
+      "beginsPattern": "^(.*?)building your sources(.*)",
+      "endsPattern": "^(No errors found.|Found \\d+ error in \\d+ ms.)"
+    }
+  },
+  "tasks": [
+    {
+      "label": "Gateway: Dev",
+      "type": "shell",
+      "command": "pnpm start:dev gateway",
+      "group": "none",
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "revealProblems": "onProblem",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": true
+      },
+      "isBackground": true
     },
-    "tasks": [
-        {
-            "label": "Gateway: Dev",
-            "type": "shell",
-            "command": "pnpm start:dev gateway",
-            "group": "none",
-            "presentation": {
-                "echo": true,
-                "reveal": "silent",
-                "revealProblems": "onProblem",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": true
-            },
-            "isBackground": true,
-        },
-        {
-            "label": "Auth: Dev",
-            "type": "shell",
-            "command": "pnpm start:dev auth",
-            "group": "none",
-            "presentation": {
-                "echo": true,
-                "reveal": "silent",
-                "revealProblems": "onProblem",
-                "focus": false,
-                "panel": "shared",
-                "showReuseMessage": true,
-                "clear": true
-            },
-            "isBackground": true,
-        },
-        {
-            "label": "All: Dev",
-            "dependsOn": [
-                "Gateway: Dev",
-                "Auth: Dev"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "runOptions": {
-                "runOn": "folderOpen"
-            }
-        }
-    ]
+    {
+      "label": "Auth: Dev",
+      "type": "shell",
+      "command": "pnpm start:dev auth",
+      "group": "none",
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "revealProblems": "onProblem",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": true
+      },
+      "isBackground": true
+    },
+    {
+      "label": "Workouts: Dev",
+      "type": "shell",
+      "command": "pnpm start:dev workouts",
+      "group": "none",
+      "presentation": {
+        "echo": true,
+        "reveal": "silent",
+        "revealProblems": "onProblem",
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": true
+      },
+      "isBackground": true
+    },
+    {
+      "label": "All: Dev",
+      "dependsOn": ["Gateway: Dev", "Auth: Dev", "Workouts: Dev"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "runOptions": {
+        "runOn": "folderOpen"
+      }
+    }
+  ]
 }

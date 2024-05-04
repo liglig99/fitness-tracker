@@ -1,0 +1,59 @@
+@baseUrl = http://localhost:3000
+
+POST {{baseUrl}}/workouts/create-excercise
+content-type: application/json
+
+{
+    "name": "Bench Press"
+}
+
+###
+# @name excercises
+GET {{baseUrl}}/workouts/excercises
+
+###
+
+GET {{baseUrl}}/workouts/excercises?filter=bench
+
+###
+
+POST {{baseUrl}}/workouts/create-workout
+content-type: application/json
+
+{
+    "name": "First Workout",
+    "excercises": [
+        {
+            "exercise": "testitest",
+            "sets": 3,
+            "reps": 10
+        }
+    ]
+}
+
+###
+
+GET {{baseUrl}}/workouts/workouts
+
+###
+# @name save_workout
+
+POST {{baseUrl}}/workouts/save-workout
+content-type: application/json
+
+{
+    "startTime": "2022-01-01T00:00:05Z",
+    "endTime": "2022-01-01T00:00:10Z",
+    "exercises": [
+        {
+            "exercise": "{{excercises.response.body.data.[0]._id}}",
+            "sets": 3,
+            "reps": 10,
+            "weight": 100
+        }
+    ]
+}
+
+###
+
+GET {{baseUrl}}/workouts/workout-logs?sortOrder=asc
