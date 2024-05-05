@@ -8,10 +8,10 @@ const instance = axios.create({
   baseURL: baseUrl,
 });
 
-const refreshInstance = axios.create({
-  //TODO besser machen
-  baseURL: baseUrl,
-});
+// const refreshInstance = axios.create({
+//   //TODO besser machen
+//   baseURL: baseUrl,
+// });
 
 let isRefreshing = false;
 
@@ -52,7 +52,7 @@ async function refreshToken(url) {
   const cookies = getCookies(url);
 
   console.log('Refreshing token');
-  refreshInstance
+  instance
     .post('/auth/refresh', {}, { headers: { Cookie: cookies } })
     .then((response) => {
       if (response.status !== 201) {

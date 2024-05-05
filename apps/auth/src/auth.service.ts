@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  NotAcceptableException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { UsersService } from './users/users.service';
@@ -97,7 +98,9 @@ export class AuthService {
       });
       const user = await this.userModel.findOne({ username: payload.username });
       if (!user) {
-        throw new RpcException(new UnauthorizedException());
+        throw new RpcException(
+          new NotAcceptableException('invalid refresh token'),
+        );
       }
 
       return {
@@ -105,7 +108,9 @@ export class AuthService {
         refresh_token: await this.createRefreshToken(user.username),
       };
     } catch (error) {
-      throw new RpcException(new UnauthorizedException('Invalid token'));
+      throw new RpcException(
+        new NotAcceptableException('invalid refresh token'),
+      );
     }
   }
 }
