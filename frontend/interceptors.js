@@ -48,7 +48,9 @@ async function refreshToken(url) {
   instance
     .post('/auth/refresh', {}, { headers: { Cookie: cookies } })
     .then((response) => {
-      console.log('Refresh response status:', response.status);
+      if (response.status !== 201) {
+        throw new Error(`Failed to refresh token ${error}`);
+      }
       saveCookies(response, url, (error) => {
         if (error) {
           console.log(response.headers);
@@ -57,9 +59,7 @@ async function refreshToken(url) {
       });
     })
     .catch((error) => {
-      if (response.status !== 201) {
-        throw new Error(`Failed to refresh token ${error}`);
-      }
+      console.error('Failed to refresh token', error);
     });
 }
 
