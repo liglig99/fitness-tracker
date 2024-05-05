@@ -83,7 +83,7 @@
     {
       "label": "Frontend: Expo",
       "type": "shell",
-      "command": "npx expo start --tunnel",
+      "command": "npx expo start --tunnel --port 8082",
       "group": "none",
       "options": {
         "cwd": "${workspaceFolder}/frontend"
