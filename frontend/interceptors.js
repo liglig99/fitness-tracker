@@ -1,9 +1,16 @@
 import tough from 'tough-cookie';
 import axios from 'axios';
 
+//TODO: parametrisieren.
+const baseUrl = 'http://192.168.178.79:3000';
 const cookiejar = new tough.CookieJar();
 const instance = axios.create({
-  baseURL: 'http://192.168.178.79:3000',
+  baseURL: baseUrl,
+});
+
+const refreshInstance = axios.create({
+  //TODO besser machen
+  baseURL: baseUrl,
 });
 
 let isRefreshing = false;
@@ -45,11 +52,11 @@ async function refreshToken(url) {
   const cookies = getCookies(url);
 
   console.log('Refreshing token');
-  instance
+  refreshInstance
     .post('/auth/refresh', {}, { headers: { Cookie: cookies } })
     .then((response) => {
       if (response.status !== 201) {
-        throw new Error(`Failed to refresh token ${error}`);
+        throw new Error(`Failed to refresh token ${response.status}`);
       }
       saveCookies(response, url, (error) => {
         if (error) {
