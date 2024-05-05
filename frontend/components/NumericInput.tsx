@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import styles from '../styles';
 
@@ -28,27 +28,27 @@ const NumericInput = ({ title, value, onChange, min = 0, max = 100 }) => {
           justifyContent: 'center',
         }}
       >
-        <TouchableOpacity style={styles.buttonContainer} onPress={handleMinus}>
+        <Pressable style={styles.buttonContainer} onPress={handleMinus}>
           <MaterialIcons
             style={{ padding: 10 }}
             name="remove"
             size={24}
             color="black"
           />
-        </TouchableOpacity>
+        </Pressable>
         <View
           style={[styles.buttonContainer, { marginLeft: 0, marginRight: 0 }]}
         >
           <Text style={[styles.buttonText, { width: 100 }]}>{value}</Text>
         </View>
-        <TouchableOpacity style={styles.buttonContainer} onPress={handlePlus}>
+        <Pressable style={styles.buttonContainer} onPress={handlePlus}>
           <MaterialIcons
             style={{ padding: 10 }}
             name="add"
             size={24}
             color="black"
           />
-        </TouchableOpacity>
+        </Pressable>
       </View>
     </View>
   );

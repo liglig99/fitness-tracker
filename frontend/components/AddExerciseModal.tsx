@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal, Text, TextInput, TouchableOpacity } from 'react-native';
+import { Modal, Text, TextInput, Pressable } from 'react-native';
 import styles from '../styles';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import NumericInput from './NumericInput';
@@ -36,17 +36,17 @@ const AddExerciseModal = ({
         />
         <NumericInput title="Reps" value={reps} onChange={setReps} />
         <NumericInput title="Sets" value={sets} onChange={setSets} />
-        <TouchableOpacity
+        <Pressable
           style={styles.buttonContainer}
           onPress={() =>
             onAddExercise({ exercise: { name: exerciseName }, reps, sets })
           }
         >
           <Text style={styles.buttonText}>Add Exercise</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.buttonContainer} onPress={onClose}>
+        </Pressable>
+        <Pressable style={styles.buttonContainer} onPress={onClose}>
           <Text style={styles.buttonText}>Cancel</Text>
-        </TouchableOpacity>
+        </Pressable>
       </SafeAreaView>
     </Modal>
   );

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View, Text, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Text, Pressable } from 'react-native';
 
 import styles from '../styles';
 
@@ -19,9 +19,9 @@ const HorizontalScrollView: React.FC<HorizontalScrollViewProps> = ({
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
         <Text style={styles.subtitile}>{title}</Text>
         {showAllAction && (
-          <TouchableOpacity onPress={showAllAction}>
+          <Pressable onPress={showAllAction}>
             <Text style={styles.subtitile}>Show all</Text>
-          </TouchableOpacity>
+          </Pressable>
         )}
       </View>
       <ScrollView

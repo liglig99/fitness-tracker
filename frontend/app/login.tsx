@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'expo-router';
-import { Text, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
+import { Text, TextInput, Pressable, SafeAreaView } from 'react-native';
 import instance from '../interceptors';
 import styles from '../styles';
 
@@ -51,10 +51,9 @@ const LoginScreen = () => {
         underlineColorAndroid="transparent"
         autoCapitalize="none"
       />
-      {/* TODO: use Pressable */}
-      <TouchableOpacity style={styles.buttonContainer} onPress={handleLogin}>
+      <Pressable style={styles.buttonContainer} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
-      </TouchableOpacity>
+      </Pressable>
     </SafeAreaView>
   );
 };

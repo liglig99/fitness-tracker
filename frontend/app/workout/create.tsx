@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TextInput, TouchableOpacity, SafeAreaView } from 'react-native';
+import { Text, TextInput, Pressable, SafeAreaView } from 'react-native';
 import styles from '../../styles';
 import AddExerciseModal from '../../components/AddExerciseModal';
 import AddCard from '../../components/AddCard';
@@ -76,20 +76,17 @@ const CreateWorkout = () => {
       />
       <HorizontalScrollView title="Exercises">
         {exercises.map((exercise, index) => (
-          <TouchableOpacity
-            key={index}
-            onPress={() => handleExerciseClick(exercise)}
-          >
+          <Pressable key={index} onPress={() => handleExerciseClick(exercise)}>
             <ExerciseCard exercise={exercise} />
-          </TouchableOpacity>
+          </Pressable>
         ))}
-        <TouchableOpacity onPress={() => setModalVisible(true)}>
+        <Pressable onPress={() => setModalVisible(true)}>
           <AddCard />
-        </TouchableOpacity>
+        </Pressable>
       </HorizontalScrollView>
-      <TouchableOpacity style={styles.buttonContainer} onPress={handleSubmit}>
+      <Pressable style={styles.buttonContainer} onPress={handleSubmit}>
         <Text style={styles.buttonText}>Create Workout</Text>
-      </TouchableOpacity>
+      </Pressable>
       <AddExerciseModal
         modalVisible={modalVisible}
         onClose={() => setModalVisible(false)}

@@ -1,4 +1,4 @@
-import { TouchableOpacity, Text, SafeAreaView } from 'react-native';
+import { Text, SafeAreaView, Pressable } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import ProfileButton from '../components/ProfileButton';
@@ -50,18 +50,18 @@ const HomeScreen = () => {
           showAllAction={() => router.navigate('workouts')}
         >
           {workouts.map((workout, index) => (
-            <TouchableOpacity
+            <Pressable
               onPress={() => router.navigate(`/workout/${workout._id}`)}
               key={index}
             >
               <Card key={index}>
                 <Text style={styles.buttonText}>{workout.name}</Text>
               </Card>
-            </TouchableOpacity>
+            </Pressable>
           ))}
-          <TouchableOpacity onPress={() => router.navigate('workout/create')}>
+          <Pressable onPress={() => router.navigate('workout/create')}>
             <AddCard />
-          </TouchableOpacity>
+          </Pressable>
         </HorizontalScrollView>
       </SafeAreaView>
     </>
