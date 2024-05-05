@@ -8,8 +8,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { UsersService } from './users/users.service';
 import { UserSchema } from './users/users.schema';
 import { LoggerModule } from '@app/common';
-import * as Joi form 'joi';
 import { ConfigModule } from '@nestjs/config';
+import * as Joi from 'joi';
 
 @Module({
   imports: [
