@@ -1,4 +1,12 @@
-import { Body, Controller, Inject, Post, Req, Res } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Inject,
+  Post,
+  Req,
+  Res,
+} from '@nestjs/common';
 import { GatewayService } from './gateway.service';
 import { SignInDto } from 'apps/auth/src/dto/sign-in.dto';
 import { CreateUserDto } from 'apps/auth/src/dto/create-user.dto';
@@ -45,6 +53,9 @@ export class AuthController {
   @Public()
   @Post('refresh')
   refresh(@Req() req: Request, @Res() res: Response): Observable<any> {
+    if (!req.cookies || !req.cookies.refresh_token) {
+      throw new BadRequestException('No refresh token provided');
+    }
     return this.authClient
       .send({ cmd: 'refresh' }, req.cookies.refresh_token)
       .pipe(
