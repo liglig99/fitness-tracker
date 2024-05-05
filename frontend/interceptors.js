@@ -18,7 +18,12 @@ instance.interceptors.request.use(async (config) => {
 // Response interceptor
 instance.interceptors.response.use(
   (response) => {
-    saveCookies(response, response.config.url);
+    saveCookies(response, response.config.url, (error) => {
+      if (error) {
+        console.log(response.headers);
+        console.error('Failed to save cookies', error);
+      }
+    });
     return response;
   },
   async (error) => {
@@ -40,16 +45,22 @@ async function refreshToken(url) {
   const cookies = getCookies(url);
 
   console.log('Refreshing token');
-  const response = await instance.post(
-    '/auth/refresh',
-    {},
-    { headers: { Cookie: cookies } },
-  );
-  if (response.status !== 201) {
-    throw new Error('Failed to refresh token');
-  }
-  console.log('Refresh response status:', response.status);
-  saveCookies(response, url);
+  instance
+    .post('/auth/refresh', {}, { headers: { Cookie: cookies } })
+    .then((response) => {
+      console.log('Refresh response status:', response.status);
+      saveCookies(response, url, (error) => {
+        if (error) {
+          console.log(response.headers);
+          console.error('Failed to save cookies', error);
+        }
+      });
+    })
+    .catch((error) => {
+      if (response.status !== 201) {
+        throw new Error(`Failed to refresh token ${error}`);
+      }
+    });
 }
 
 function getCookies(url) {
@@ -65,18 +76,26 @@ function getCookies(url) {
   });
 }
 
-function saveCookies(response, url) {
+function saveCookies(response, url, callback) {
   if (!response.headers['set-cookie']) {
+    callback(null);
     return;
   }
-  return new Promise((rs, rj) => {
-    cookiejar.setCookie(response.headers['set-cookie'], url, (e, s) => {
+  const cookies = response.headers['set-cookie'];
+  let errorOccurred = false;
+  cookies.forEach((cookie, index) => {
+    cookiejar.setCookie(cookie, url, (e) => {
       if (e) {
-        rj(e);
-        return;
+        console.error('Failed to save cookie', error);
+        errorOccurred = true;
       }
 
-      rs(s);
+      // Call the callback after the last cookie has been processed
+      if (index === cookies.length - 1) {
+        callback(
+          errorOccurred ? new Error('Failed to save some cookies') : null,
+        );
+      }
     });
   });
 }

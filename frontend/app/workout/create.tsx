@@ -16,27 +16,28 @@ const CreateWorkout = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleSubmit = async () => {
-    try {
-      //TODO: shoener machen
-      const flatExercises = exercises.map((item) => ({
-        exercise: item.exercise.name,
-        reps: item.reps,
-        sets: item.sets,
-      }));
-      const response = await instance.post(
+    //TODO: shoener machen
+    const flatExercises = exercises.map((item) => ({
+      exercise: item.exercise.name,
+      reps: item.reps,
+      sets: item.sets,
+    }));
+    instance
+      .post(
         '/workouts/create-workout',
         JSON.stringify({ name, exercises: flatExercises }),
-      );
+      )
+      .then((response) => {
+        if (response.status !== 200) {
+          console.log(JSON.stringify({ name, exercises: flatExercises }));
+          throw new Error('Failed to create workout');
+        }
 
-      if (response.status !== 200) {
-        console.log(JSON.stringify({ name, exercises: flatExercises }));
-        throw new Error('Failed to create workout');
-      }
-
-      router.navigate('home');
-    } catch (error) {
-      console.error(error);
-    }
+        router.navigate('home');
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
 
   const handleAddExercise = (exercise) => {

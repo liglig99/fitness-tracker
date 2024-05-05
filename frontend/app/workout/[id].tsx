@@ -12,17 +12,17 @@ const WorkoutPage = () => {
 
   useEffect(() => {
     const fetchWorkout = async () => {
-      try {
-        const response = await instance.get(`/workouts/workout/${id}`);
-
-        if (response.status !== 200) {
-          throw new Error('Failed to fetch workout');
-        }
-
-        setWorkout(response.data);
-      } catch (error) {
-        console.error(error);
-      }
+      instance
+        .get(`/workouts/workout/${id}`)
+        .then((response) => {
+          if (response.status !== 200) {
+            throw new Error('Failed to fetch workout');
+          }
+          setWorkout(response.data);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     };
 
     fetchWorkout();

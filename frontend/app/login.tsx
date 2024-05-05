@@ -10,8 +10,8 @@ const LoginScreen = () => {
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
-    try {
-      await instance.post(
+    instance
+      .post(
         '/auth/login',
         JSON.stringify({
           username,
@@ -22,11 +22,11 @@ const LoginScreen = () => {
             'Content-Type': 'application/json',
           },
         },
-      );
-      router.back();
-    } catch (error) {
-      console.error(error); // todo handle wrong credentials
-    }
+      )
+      .catch((error) => {
+        console.error(error); // todo handle wrong credentials
+      });
+    router.back();
   };
 
   return (
@@ -51,6 +51,7 @@ const LoginScreen = () => {
         underlineColorAndroid="transparent"
         autoCapitalize="none"
       />
+      {/* TODO: use Pressable */}
       <TouchableOpacity style={styles.buttonContainer} onPress={handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>

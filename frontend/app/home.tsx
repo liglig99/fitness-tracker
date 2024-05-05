@@ -16,15 +16,17 @@ const HomeScreen = () => {
   useFocusEffect(
     React.useCallback(() => {
       const fetchWorkouts = async () => {
-        try {
-          const response = await instance.get('/workouts/workouts');
-          if (response.status !== 200) {
-            throw new Error('Failed to fetch workouts');
-          }
-          setWorkouts(response.data.data);
-        } catch (error) {
-          console.error(error);
-        }
+        instance
+          .get('/workouts/workouts')
+          .then((response) => {
+            if (response.status !== 200) {
+              throw new Error('Failed to fetch workouts');
+            }
+            setWorkouts(response.data.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
       };
 
       fetchWorkouts();
