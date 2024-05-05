@@ -7,9 +7,11 @@ import { jwtConstants } from './auth.constants';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UsersService } from './users/users.service';
 import { UserSchema } from './users/users.schema';
+import { LoggerModule } from '@app/common';
 
 @Module({
   imports: [
+    LoggerModule,
     UsersModule,
     JwtModule.register({
       global: true,

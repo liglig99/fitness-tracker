@@ -4,7 +4,7 @@ import { SignInDto } from 'apps/auth/src/dto/sign-in.dto';
 import { CreateUserDto } from 'apps/auth/src/dto/create-user.dto';
 import { ClientProxy } from '@nestjs/microservices';
 import { Observable, tap } from 'rxjs';
-import { Public } from '@app/common/lib/auth.guard';
+import { Public } from '@app/common';
 import { Response, Request } from 'express';
 
 @Controller('auth')
