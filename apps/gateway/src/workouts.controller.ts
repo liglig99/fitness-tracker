@@ -9,14 +9,12 @@ import {
 } from '@nestjs/common';
 import { GatewayService } from './gateway.service';
 import { ClientProxy } from '@nestjs/microservices';
-import { Public } from '@app/common/lib/auth.guard';
 import { CreateExerciseDto } from 'apps/workouts/src/dto/create-exercise.dto';
 import { CreateWorkoutDto } from 'apps/workouts/src/dto/create-workout.dto';
 import { CreateWorkoutLogDto } from 'apps/workouts/src/dto/create-workout-log.dto';
 import { ObjectId } from 'mongoose';
 import { ValidateObjectIdPipe } from '@app/common/lib/validate-objectid-pipe';
 
-//@Public() //TODO: Remove this line to make this endpoint private
 @Controller('workouts')
 export class WorkoutsController {
   constructor(

@@ -1,17 +1,10 @@
 import tough from 'tough-cookie';
 import axios from 'axios';
 
-//TODO: parametrisieren.
-const baseUrl = 'http://192.168.178.79:3000';
 const cookiejar = new tough.CookieJar();
 const instance = axios.create({
-  baseURL: baseUrl,
+  baseURL: 'http://192.168.178.79:3000',
 });
-
-// const refreshInstance = axios.create({
-//   //TODO besser machen
-//   baseURL: baseUrl,
-// });
 
 let isRefreshing = false;
 
@@ -36,13 +29,16 @@ instance.interceptors.response.use(
   async (error) => {
     if (error.response.status === 401 && !isRefreshing) {
       isRefreshing = true;
-      await refreshToken(error.config.url).catch((error) => {
-        console.error(error);
-        isRefreshing = false;
-        return Promise.reject(error);
-      });
-      isRefreshing = false;
-      return instance(error.config);
+      await refreshToken(error.config.url)
+        .then(() => {
+          isRefreshing = false;
+          return instance(error.config);
+        })
+        .catch((error) => {
+          console.error(error);
+          isRefreshing = false;
+          return Promise.reject(error);
+        });
     }
     return Promise.reject(error);
   },
@@ -52,22 +48,26 @@ async function refreshToken(url) {
   const cookies = getCookies(url);
 
   console.log('Refreshing token');
-  instance
-    .post('/auth/refresh', {}, { headers: { Cookie: cookies } })
-    .then((response) => {
-      if (response.status !== 201) {
-        throw new Error(`Failed to refresh token ${response.status}`);
-      }
-      saveCookies(response, url, (error) => {
-        if (error) {
-          console.log(response.headers);
-          console.error('Failed to save cookies', error);
+  return await new Promise((rs, rj) => {
+    instance
+      .post('/auth/refresh', {}, { headers: { Cookie: cookies } })
+      .then((response) => {
+        if (response.status !== 201) {
+          rj(`Failed to refresh token ${response.status}`);
+          return;
         }
+        saveCookies(response, url, (error) => {
+          if (error) {
+            rj('Failed to save cookies', error);
+            return;
+          }
+        });
+        rs();
+      })
+      .catch((error) => {
+        rj(error);
       });
-    })
-    .catch((error) => {
-      console.error('Failed to refresh token', error);
-    });
+  });
 }
 
 function getCookies(url) {
@@ -93,7 +93,6 @@ function saveCookies(response, url, callback) {
   cookies.forEach((cookie, index) => {
     cookiejar.setCookie(cookie, url, (e) => {
       if (e) {
-        console.error('Failed to save cookie', error);
         errorOccurred = true;
       }
 
