@@ -1,19 +1,17 @@
 import { NestFactory } from '@nestjs/core';
-import { AuthModule } from './auth.module';
+import { WorkoutsModule } from './workouts.module';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { Logger } from 'nestjs-pino';
 
 async function bootstrap() {
   const app = await NestFactory.createMicroservice<MicroserviceOptions>(
-    AuthModule,
+    WorkoutsModule,
     {
       transport: Transport.TCP,
       options: {
-        port: 3001,
+        port: 3002,
       },
     },
   );
-  app.useLogger(app.get(Logger));
 
   await app.listen();
 }

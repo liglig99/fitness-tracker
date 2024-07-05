@@ -32,6 +32,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/gateway/tsconfig.app.json"
       }
+    },
+    "workouts": {
+      "type": "application",
+      "root": "apps/workouts",
+      "entryFile": "main",
+      "sourceRoot": "apps/workouts/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/workouts/tsconfig.app.json"
+      }
     }
   },
   "monorepo": true,
