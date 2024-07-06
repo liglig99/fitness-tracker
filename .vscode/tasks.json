@@ -31,7 +31,6 @@
         "echo": true,
         "reveal": "silent",
         "revealProblems": "onProblem",
-        "focus": false,
         "panel": "shared",
         "showReuseMessage": true,
         "clear": true
@@ -47,22 +46,6 @@
         "echo": true,
         "reveal": "silent",
         "revealProblems": "onProblem",
-        "focus": false,
-        "panel": "shared",
-        "showReuseMessage": true,
-        "clear": true
-      },
-      "isBackground": true
-    },
-    {
-      "label": "Workouts: Dev",
-      "type": "shell",
-      "command": "pnpm start:dev workouts",
-      "group": "none",
-      "presentation": {
-        "echo": true,
-        "reveal": "silent",
-        "revealProblems": "onProblem",
         "panel": "shared",
         "showReuseMessage": true,
         "clear": true
@@ -71,7 +54,7 @@
     },
     {
       "label": "All: Dev",
-      "dependsOn": ["Gateway: Dev", "Auth: Dev", "Workouts: Dev"],
+      "dependsOn": ["Gateway: Dev", "Auth: Dev"],
       "group": {
         "kind": "build",
         "isDefault": true
@@ -79,6 +62,62 @@
       "runOptions": {
         "runOn": "folderOpen"
       }
+    },
+    {
+      "label": "Frontend: Expo",
+      "type": "shell",
+      "command": "npx expo start --tunnel",
+      "group": "none",
+      "options": {
+        "cwd": "${workspaceFolder}/frontend"
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared",
+        "showReuseMessage": true,
+        "clear": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Setup Backend: PNPM Install",
+      "type": "shell",
+      "command": "pnpm install",
+      "group": "none",
+      "presentation": {
+        "echo": true,
+        "reveal": "never",
+        "panel": "shared",
+        "clear": true,
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Setup Frontend: NPM Install",
+      "type": "shell",
+      "command": "npm install",
+      "options": {
+        "cwd": "${workspaceFolder}/frontend"
+      },
+      "group": "none",
+      "presentation": {
+        "echo": true,
+        "reveal": "never",
+        "panel": "shared",
+        "clear": true,
+        "close": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Setup: All",
+      "dependsOn": [
+        "Setup Frontend: NPM Install",
+        "Setup Backend: PNPM Install"
+      ]
     }
   ]
 }
